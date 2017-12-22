@@ -17,6 +17,8 @@ data:
         inCluster: true
     web:
       http: 0.0.0.0:5556
+      allowedOrigins:
+      - "https://*"
     grpc:
       addr: 0.0.0.0:5557
       tlsCert: /etc/tectonic-identity-grpc-server-secret/tls-cert
@@ -42,6 +44,13 @@ data:
       - ${console_client_id}
       name: 'Kubectl'
       secret: ${kubectl_secret}
+    - id: cnx-admin
+      secret: cnxmgrsecret
+      name: 'CNX Admin'
+      # These will be the hostnames for the Masters from the client where you will access it. Can be stub hostnames that can be completed later, say via /etc/hosts entries
+      redirectURIs:
+      - https://YourMaster1PublicHostname:30003/login/oidc/callback
+      - https://YourMaster2PublicHostname:30003/login/oidc/callback
     enablePasswordDB: true
     staticPasswords:
     - email: "${admin_email}"
