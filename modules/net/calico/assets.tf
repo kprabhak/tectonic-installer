@@ -6,6 +6,7 @@ data "template_file" "calico" {
     calico_image     = "${var.container_images["calico"]}"
     cluster_cidr     = "${var.cluster_cidr}"
     mtu              = "${var.mtu}"
+    tigera_pull_secret = "${base64encode(file(var.tigera_pull_secret_path))}"
   }
 }
 

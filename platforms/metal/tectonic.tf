@@ -119,6 +119,8 @@ module "calico" {
   container_images = "${var.tectonic_container_images}"
   enabled          = "${var.tectonic_networking == "calico"}"
   mtu              = "${var.tectonic_metal_calico_mtu}"
+
+  tigera_pull_secret_path   = "${var.tectonic_tigera_pull_secret_path}"
 }
 
 module "canal" {

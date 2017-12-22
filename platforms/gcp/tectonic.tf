@@ -127,6 +127,8 @@ module "calico" {
   container_images = "${var.tectonic_container_images}"
   cluster_cidr     = "${var.tectonic_cluster_cidr}"
   enabled          = "${var.tectonic_networking == "calico"}"
+
+  tigera_pull_secret_path   = "${var.tectonic_tigera_pull_secret_path}"
 }
 
 module "canal" {

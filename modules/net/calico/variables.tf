@@ -16,3 +16,9 @@ variable "mtu" {
   type    = "string"
   default = 1500
 }
+
+variable "tigera_pull_secret_path" {
+  type        = "string"
+  description = "path to Tigera Essentials pull secret"
+  default     = "/dev/null"
+}

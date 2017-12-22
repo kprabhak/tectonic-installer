@@ -520,3 +520,14 @@ variable "tectonic_custom_ca_pem_list" {
 (optional) A list of PEM encoded CA files that will be installed in /etc/ssl/certs on etcd, master, and worker nodes.
 EOF
 }
+
+
+variable "tectonic_tigera_pull_secret_path" {
+  type    = "string"
+  default = ""
+
+  description = <<EOF
+Pull secret for access to cnx-node image from Private registry
+The path the pull secret file in JSON format.
+EOF
+}

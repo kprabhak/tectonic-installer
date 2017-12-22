@@ -1,7 +1,16 @@
-# Calico Kubernetes Datastore Hosted Install
-# Calico policy-only with user-supplied networking
-# http://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubernetes-datastore/
-#
+# CNX Kubernetes Datastore Hosted Install
+# Calico Policy and networking
+
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+metadata:
+  namespace: kube-system
+  name: tigera-pull-secret
+data:
+  .dockerconfigjson: ${tigera_pull_secret}
+
+---
 # This ConfigMap is used to configure a self-hosted Calico installation.
 kind: ConfigMap
 apiVersion: v1
@@ -136,6 +145,8 @@ spec:
         # the master to communicate with pods.
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
+      imagePullSecrets:
+      - name: tigera-pull-secret
       containers:
         # Runs calico/node container on each Kubernetes node.  This
         # container programs network policy and routes on each
