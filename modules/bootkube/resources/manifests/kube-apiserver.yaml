@@ -60,6 +60,14 @@ spec:
         - --oidc-username-claim=${oidc_username_claim}
         - --oidc-groups-claim=${oidc_groups_claim}
         - --oidc-ca-file=/etc/kubernetes/secrets/oidc-ca.crt
+        - --cors-allowed-origins="https://*"
+        - --requestheader-client-ca-file=/etc/kubernetes/secrets/front-proxy-ca.pem
+        - --requestheader-extra-headers-prefix=X-Remote-Extra-
+        - --requestheader-group-headers=X-Remote-Group
+        - --requestheader-username-headers=X-Remote-User
+        - --requestheader-allowed-names=front-proxy-client
+        - --proxy-client-cert-file=/etc/kubernetes/secrets/front-proxy-client.pem
+        - --proxy-client-key-file=/etc/kubernetes/secrets/front-proxy-client.key
         - --cloud-provider=${cloud_provider}
         ${cloud_provider_config_flag}
         - --audit-log-path=/var/log/kubernetes/kube-apiserver-audit.log
