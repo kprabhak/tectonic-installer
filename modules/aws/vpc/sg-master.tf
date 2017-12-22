@@ -98,6 +98,57 @@ resource "aws_security_group_rule" "master_ingress_flannel_from_worker" {
   to_port   = 4789
 }
 
+resource "aws_security_group_rule" "master_ingress_calico_bgp" {
+  type              = "ingress"
+  security_group_id = "${aws_security_group.master.id}"
+
+  protocol  = "tcp"
+  from_port = 179
+  to_port   = 179
+  self      = true
+}
+
+resource "aws_security_group_rule" "master_ingress_calico_bgp_from_worker" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.master.id}"
+  source_security_group_id = "${aws_security_group.worker.id}"
+
+  protocol  = "tcp"
+  from_port = 179
+  to_port   = 179
+}
+
+resource "aws_security_group_rule" "master_ingress_calico_ipip" {
+  type              = "ingress"
+  security_group_id = "${aws_security_group.master.id}"
+
+  protocol  = 4
+  from_port = 0
+  to_port   = 0
+  self      = true
+}
+
+resource "aws_security_group_rule" "master_ingress_calico_ipip_from_worker" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.master.id}"
+  source_security_group_id = "${aws_security_group.worker.id}"
+
+  protocol  = 4
+  from_port = 0
+  to_port   = 0
+}
+
+
+resource "aws_security_group_rule" "worker_ingress_CNXapiserver_from_masternode" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.master.id}"
+  source_security_group_id = "${aws_security_group.master.id}"
+
+  protocol  = "tcp"
+  from_port = 5443
+  to_port   = 5443
+}
+
 resource "aws_security_group_rule" "master_ingress_node_exporter" {
   type              = "ingress"
   security_group_id = "${aws_security_group.master.id}"
